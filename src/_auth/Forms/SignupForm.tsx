@@ -32,9 +32,12 @@ const SignupForm = () => {
     e.preventDefault();
     try{
       const newUser = await createUserAccount(values);
-      await sendEmailVerificationLink(values.email);
-      setTimeout(() =>  navigate("/sign-in"), 3000);
-      console.log(newUser);
+      if (newUser) {
+        // await sendEmailVerificationLink(values.email);
+        form.reset()
+        setTimeout(() =>  navigate("/sign-in"), 3000);
+        console.log(newUser);
+      }
     } catch (error) {
       console.log(error)
     }
