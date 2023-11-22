@@ -33,11 +33,14 @@ export type IUpdatePost = {
 
 export type IUser = {
   id: string;
-  name: string;
-  username: string;
   email: string;
-  imageUrl: string;
-  bio: string;
+  username: string;
+  avatar: string; 
+};
+
+export type IUserLoggedIn = {
+  user: IUser;
+  access_token: string;
 };
 
 export type INewUser = {

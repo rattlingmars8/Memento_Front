@@ -1,13 +1,16 @@
-import  ReactDOM from "react-dom/client";
+import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/ReactToastify.min.css";
 
 import App from "./App";
-import { ToastContainer } from "react-toastify";
-import 'react-toastify/ReactToastify.min.css';
+import { AuthProvider } from "./context/AuthProvider";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <BrowserRouter>
-   <ToastContainer />
-   <App />
+    <AuthProvider>
+      <ToastContainer />
+      <App />
+    </AuthProvider>
   </BrowserRouter>
-)
+);

@@ -3,23 +3,25 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-
 import { Button } from "@/components/ui/button";
 import { useForm } from "react-hook-form";
-import { LoginValidation, SignupValidation } from "@/lib/validation";
+import { LoginValidation } from "@/lib/validation";
 import Loader from "@/components/ui/shared/Loader";
 import { Link } from "react-router-dom";
 import { signInUser } from "@/api_call/auth/auth";
 import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import AuthContext from "@/context/AuthProvider";
 
 const SigninForm = () => {
+
+  const { setUserData } = useContext(AuthContext);
   const isLoadind = false;
 
   // 1. Define your form.
@@ -39,8 +41,9 @@ const SigninForm = () => {
       const userData = await signInUser(values.email, values.password);
       if (userData) {
         console.log(userData);
-        // form.reset();
-        // setTimeout(() => navigate("/"), 3000);
+        setUserData(userData);
+        form.reset();
+        navigate("/");
       }
     } catch (error) {
       console.log(error);

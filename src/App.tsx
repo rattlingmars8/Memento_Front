@@ -6,6 +6,7 @@ import SignupForm from "./_auth/Forms/SignupForm"
 import AuthLayout from "./_auth/AuthLayout"
 import RootLayout from "./_root/RootLayout"
 import { Home } from "./_root/pages"
+import ForgotForm from "./_auth/Forms/ForgotForm"
 
 const App = () => {
   return (
@@ -14,6 +15,7 @@ const App = () => {
         <Route element={<AuthLayout />}>
           <Route path="sign-in" element={<SigninForm />}/>
           <Route path="sign-up" element={<SignupForm />}/>
+          <Route path="forgot-password" element={<ForgotForm />}/>
         </Route>
 
 

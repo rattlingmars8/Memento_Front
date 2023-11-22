@@ -50,12 +50,29 @@ export async function signInUser(email: string, password: string) {
         headers: {
           "Content-Type": "application/x-www-form-urlencoded",
         },
-      }
+        withCredentials: true,
+      },
     );
     // console.log(: email, password);
     localStorage.setItem("access_token", response.data.access_token);
     return response.data;
 
+  } catch (error) {
+    if (error instanceof AxiosError) {
+      console.log(error);
+      toast.error(error.response?.data.detail);
+    } else {
+      console.log(error);
+      toast.error("Something went wrong");
+    }
+  }
+}
+
+export async function onForgotPassword(email: string) {
+  try {
+    const response = await axios.post("/forgot/forgot-password", { email: email });
+    toast.success(response.data.detail);
+    return response.data;
   } catch (error) {
     if (error instanceof AxiosError) {
       console.log(error);
