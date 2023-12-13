@@ -48,3 +48,18 @@ export type INewUser = {
   email: string;
   password: string;
 };
+
+
+export type ImageOnFeed = {
+  owner: IUser,
+  id: number,
+  title: string,
+  cloudinary_url: string
+  edited_cloudinary_url:  null | string
+  created_at: string
+  updated_at: string
+  rating: string
+  likes: number
+  tags: string[]
+  comments: number
+}

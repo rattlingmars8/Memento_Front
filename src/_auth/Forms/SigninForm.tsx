@@ -12,17 +12,18 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useForm } from "react-hook-form";
 import { LoginValidation } from "@/lib/validation";
-import Loader from "@/components/ui/shared/Loader";
-import { Link } from "react-router-dom";
+import Loader from "@/components/shared/Loader";
+import { Link, useLocation } from "react-router-dom";
 import { signInUser } from "@/api_call/auth/auth";
 import { useNavigate } from "react-router-dom";
-import { useContext } from "react";
-import AuthContext from "@/context/AuthProvider";
+// import { useContext } from "react";
+import {useUserContext} from "@/context/AuthProvider";
 
 const SigninForm = () => {
-
-  const { setUserData } = useContext(AuthContext);
-  const isLoadind = false;
+ 
+  const { setUserData, setIsLoading, isLoading: isUserLoading} = useUserContext();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   // 1. Define your form.
   const form = useForm<z.infer<typeof LoginValidation>>({
@@ -33,20 +34,22 @@ const SigninForm = () => {
     },
   });
 
-  const navigate = useNavigate();
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof LoginValidation>, e?: any) {
     e.preventDefault();
     try {
+      setIsLoading(true);
       const userData = await signInUser(values.email, values.password);
       if (userData) {
         console.log(userData);
         setUserData(userData);
         form.reset();
-        navigate("/");
+        setTimeout(() =>  navigate("/", { state: { from: location }, replace: true }), 750);
       }
     } catch (error) {
       console.log(error);
+    } finally {
+      setIsLoading(false);
     }
   }
 
@@ -62,6 +65,7 @@ const SigninForm = () => {
         </p>
 
         <form
+          noValidate={true}
           onSubmit={form.handleSubmit(onSubmit)}
           className="flex flex-col gap-5 w-full mt-4"
         >
@@ -92,7 +96,7 @@ const SigninForm = () => {
             )}
           />
           <Button type="submit" className="shad-button_primary text-dark-1">
-            {isLoadind ? (
+            {isUserLoading ? (
               <div className="flex-center gap-2 text-dark-1">
                 <Loader /> Loading...
               </div>

@@ -12,8 +12,9 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useForm } from "react-hook-form";
 import { ForgotValidation } from "@/lib/validation";
-import Loader from "@/components/ui/shared/Loader";
+import Loader from "@/components/shared/Loader";
 import { Link } from "react-router-dom";
+import { onForgotPassword } from "@/api_call/auth/auth";
 
 const ForgotForm = () => {
   let isLoadind = false;
@@ -31,17 +32,12 @@ const ForgotForm = () => {
     e.preventDefault();
     isLoadind = true;
     console.log(values, isLoadind);
-    // try {
-    //   const userData = await signInUser(values.email, values.password);
-    //   if (userData) {
-    //     console.log(userData);
-    //     setUserData(userData);
-    //     form.reset();
-    //     setTimeout(() => navigate("/"), 3000);
-    //   }
-    // } catch (error) {
-    //   console.log(error);
-    // }
+    try {
+      await onForgotPassword(values.email);
+      form.reset();
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   return (

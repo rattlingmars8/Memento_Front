@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button";
 import { useForm } from "react-hook-form";
 import { SignupValidation } from "@/lib/validation";
-import Loader from "@/components/ui/shared/Loader";
+import Loader from "@/components/shared/Loader";
 import { Link } from "react-router-dom";
 import { createUserAccount, sendEmailVerificationLink } from "@/api_call/auth/auth";
 import { useNavigate } from "react-router-dom";

@@ -1,12 +1,20 @@
-import AuthContext from "@/context/AuthProvider"
-import { useContext } from "react"
-
+import { Bottombar, LeftSidebar, Topbar } from "@/components/shared";
+import { Outlet } from "react-router-dom";
 
 const RootLayout = () => {
-  const { userData } = useContext(AuthContext)
-  return (
-    <img src={userData?.user.avatar} className="rounded-full w-24 h-24" alt={`${userData?.user.username} avatar`} />
-  )
-}
 
-export default RootLayout
+  return (
+    <div className="w-full md:flex">
+      <Topbar />
+      <LeftSidebar />
+
+      <section className="flex flex-1 h-full">
+        <Outlet />
+      </section>
+
+      <Bottombar />
+    </div>
+  );
+};
+
+export default RootLayout;
